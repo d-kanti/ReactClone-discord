@@ -69,7 +69,7 @@ function Sidebar() {
             <div className="sidebar__profile">
                 <Avatar src = "https://avatars0.githubusercontent.com/u/64345702?s=460&u=029597a026d7bb18bac354eacb78efa1f1643bf9&v=4"/>
                 <div className="sidebar__profileInfo">
-                    <h3>My Name This</h3>
+                    <h3>d-kanti</h3>
                     <p>ID:4568321</p>
                 </div>
                 <div className="sidebar__profileIcons">
