@@ -9,15 +9,9 @@ function App() {
   return (
     //BEM naming convention
     <div className="app">
-         
-
-        
-        <Sidebar />
-
-        
-        <Chat />
-
-     </div>
+      <Sidebar />
+      <Chat />
+    </div>
   );
 }
 
