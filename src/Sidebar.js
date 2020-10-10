@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import "./Sidebar.css"
 import AddIcon from '@material-ui/icons/Add';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
@@ -12,11 +12,29 @@ import HeadsetIcon from '@material-ui/icons/Headset';
 import SettingsIcon from '@material-ui/icons/Settings';
 import {useSelector} from 'react-redux';
 import {selectUser} from './features/userSlice'
-
+import db,{auth} from './firebase'
 
 function Sidebar() {
     const user = useSelector(selectUser)
-    
+    const [chanels,setChanels]=useState([]);
+
+    useEffect(() => {
+        db.collection('chanels').onSnapshot(snapshot => (
+            setChanels(snapshot.docs.map(doc =>({
+                id : doc.id,
+                chanel:doc.data(),
+            })))
+        ))
+    }, [])
+
+    const handelAddChanel = () => {
+        const chanelName = prompt("Enter the New Chanel Name")
+        if(chanelName){
+            db.collection('chanels').add({
+                chanelName : chanelName
+            })
+        }
+    }
 
     return (
         <div className="sidebar">
@@ -34,15 +52,18 @@ function Sidebar() {
                         <ExpandMoreIcon />
                         <h4>Test Chanels</h4>
                     </div>
-                    <AddIcon className="sidebar__addChanels"/>
+                    <AddIcon onClick={handelAddChanel} className="sidebar__addChanels"/>
 
                 </div>
 
                 <div className="sidebar__chanelList">
-                    <SidebarChanel />
-                    <SidebarChanel />
-                    <SidebarChanel />
-                    <SidebarChanel />
+                    {chanels.map(({id,chanel})=>(
+                        <SidebarChanel 
+                        key={id} 
+                        id={id}
+                        chanelName={chanel.chanelName} 
+                        />
+                    ))}
 
                 </div>
 
@@ -71,10 +92,10 @@ function Sidebar() {
             </div>
 
             <div className="sidebar__profile">
-                <Avatar src ={user.photo}/>
+                <Avatar onClick= {() => auth.signOut() }src ={user.photo} className='the__avatar' />
                 <div className="sidebar__profileInfo">
                     <h3>{user.displayName}</h3>
-                    <p>ID:4568321</p>
+                    <p>ID:{user.uid.substring(0,7)}</p>
                 </div>
                 <div className="sidebar__profileIcons">
                     <MicNoneIcon />

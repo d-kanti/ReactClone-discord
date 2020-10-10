@@ -22,7 +22,7 @@ function App() {
 
 
     auth.onAuthStateChanged((authUser)=>{
-      console.log('user is ', authUser)
+      
       if (authUser){
         //login user
         dispatch(

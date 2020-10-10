@@ -84,3 +84,8 @@
 .sidebar__profileInfo>h3{
     color: white;
 }
+
+.the__avatar:hover{
+    border: 1px solid white;
+    cursor: pointer;
+}
